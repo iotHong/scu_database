@@ -2,5 +2,4 @@ SELECT companyname, ROUND(COUNT(CASE WHEN ShippedDate > RequiredDate THEN true E
 FROM 'Order', 'Shipper'
 WHERE 'Order'.ShipVia = Shipper.id
 GROUP BY Shipper.id
-ORDER BY percent DESC
-;
+ORDER BY percent DESC;
