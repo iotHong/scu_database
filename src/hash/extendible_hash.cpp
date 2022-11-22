@@ -28,9 +28,8 @@ size_t ExtendibleHash<K, V>::HashKey(const K &key) const{
  * helper function to return global depth of hash table
  * NOTE: you must implement this function in order to pass test
  */
-template <typename K, typename V>
-int ExtendibleHash<K, V>::GetGlobalDepth() const {
-        lock_guard<mutex> lock(latch);
+template <typename K, typename V>int ExtendibleHash<K, V>::GetGlobalDepth() const {
+        std::lock_guard<std::mutex> lock(latch);
         return this->globalDepth;
 }
 
@@ -38,30 +37,26 @@ int ExtendibleHash<K, V>::GetGlobalDepth() const {
  * helper function to return local depth of one specific bucket
  * NOTE: you must implement this function in order to pass test
  */
-template <typename K, typename V>
-int ExtendibleHash<K, V>::GetLocalDepth(int bucket_id) const {
+template <typename K, typename V>int ExtendibleHash<K, V>::GetLocalDepth(int bucket_id) const {
         if (size_t(bucket_id) < buckets.size()) {
-            lock_guard<mutex> lck(buckets[bucket_id]->latch);
+            std::lock_guard<std::mutex> lck(buckets[bucket_id]->latch);
             return buckets[bucket_id]->localDepth;
         }
         return -1;
 }
-
 /*
  * helper function to return current number of bucket in hash table
  */
-template <typename K, typename V>
-int ExtendibleHash<K, V>::GetNumBuckets() const {
-        lock_guard<mutex> lock(latch);
+template <typename K, typename V>int ExtendibleHash<K, V>::GetNumBuckets() const {
+        std::lock_guard<std::mutex> lock(latch);
         return this->bucketNum;
 }
-
 /*
  * lookup function to find value associate with input key
  */
 template <typename K, typename V>
 bool ExtendibleHash<K, V>::Find(const K &key, V &value) {
-        int idx = getIdx(key);
+        int idx = getBucketIndex(key);
         lock_guard<mutex> lck(buckets[idx]->latch);
         auto it = buckets[idx]->keyMap.find(key);
         if (it != buckets[idx]->keyMap.end()) {
@@ -70,8 +65,9 @@ bool ExtendibleHash<K, V>::Find(const K &key, V &value) {
         }
         return false;
 }
-template <typename K, typename V>int ExtendibleHash<K, V>::getIdx(const K &key) const{
-        lock_guard<mutex> lck(this->latch);
+template <typename K, typename V>
+int ExtendibleHash<K, V>::getBucketIndex(const K &key) const{
+        std::lock_guard<std::mutex> lck(this->latch);
         size_t hashValue = HashKey(key);
         size_t mask = (1 << globalDepth) - 1;
         return hashValue & mask;
@@ -82,7 +78,7 @@ template <typename K, typename V>int ExtendibleHash<K, V>::getIdx(const K &key) 
  */
 template <typename K, typename V>
 bool ExtendibleHash<K, V>::Remove(const K &key) {
-        int idx = getIdx(key);
+        int idx = getBucketIndex(key);
         lock_guard<mutex> lck(buckets[idx]->latch);
         shared_ptr<Bucket> cur = buckets[idx];
         if (cur->keyMap.count(key)) {
@@ -98,10 +94,10 @@ bool ExtendibleHash<K, V>::Remove(const K &key) {
  * global depth
  */
 template <typename K, typename V>void ExtendibleHash<K, V>::Insert(const K &key, const V &value) {
-        int idx = getIdx(key);
+        int idx = getBucketIndex(key);
         shared_ptr<Bucket> cur = buckets[idx];
         while (true) {
-            lock_guard<mutex> lck(cur->latch);
+            stf::lock_guard<std::mutex> lck(cur->latch);
             auto it1 = cur->keyMap.find(key);
             if (it1 != cur->keyMap.end()) // key exists
             {
@@ -146,7 +142,7 @@ template <typename K, typename V>void ExtendibleHash<K, V>::Insert(const K &key,
                         }
                     }
                 }
-                idx = getIdx(key);
+                idx = getBucketIndex(key);
                 cur = buckets[idx];
             }
         }
