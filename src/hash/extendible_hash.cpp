@@ -1,7 +1,7 @@
-#include <list>
-
 #include "hash/extendible_hash.h"
 #include "page/page.h"
+#include <list>
+#include <memory>
 
 namespace scudb {
 
@@ -11,9 +11,9 @@ namespace scudb {
  */
 template <typename K, typename V>
 ExtendibleHash<K, V>::ExtendibleHash(size_t size) {
-        this->globalDepth = 0;
-        this->bucketNum = 1;
-        this->bucketMaxSize = size;
+        globalDepth(0);
+        bucketNum(1);
+        bucketMaxSize(size);
         shared_ptr<Bucket> sp1(new Bucket(0));
         this->buckets.push_back(sp1);
 }
