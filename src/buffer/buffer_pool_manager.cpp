@@ -35,19 +35,6 @@ BufferPoolManager::~BufferPoolManager() {
   delete free_list_;
 }
 
-/**
- * 1. search hash table.
- *  1.1 if exist, pin the page and return immediately
- *  1.2 if no exist, find a replacement entry from either free list or lru
- *      replacer. (NOTE: always find from free list first)
- * 2. If the entry chosen for replacement is dirty, write it back to disk.
- * 3. Delete the entry for the old page from the hash table and insert an
- * entry for the new page.
- * 4. Update page metadata, read page content from disk file and return page
- * pointer
- */
-
-
 Page *BufferPoolManager::GetVictimPage() {
         Page *page = nullptr;
         if (!free_list_->empty()) //free_list have free page
