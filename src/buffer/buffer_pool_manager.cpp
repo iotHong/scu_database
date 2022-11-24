@@ -57,7 +57,7 @@ Page *BufferPoolManager::GetVictimPage() {
 
 Page *BufferPoolManager::FetchPage(page_id_t page_id) {
     /*****************************************/
-        lock_guard<mutex> lck(latch_);
+        std::lock_guard<std::mutex> lck(latch_);
         //search the page
 
         Page *target = nullptr;
@@ -98,7 +98,7 @@ Page *BufferPoolManager::FetchPage(page_id_t page_id) {
  */
 bool BufferPoolManager::UnpinPage(page_id_t page_id, bool is_dirty) {
         /*****************************************/
-        lock_guard<mutex> lck(latch_);
+        std::lock_guard<std::mutex> lck(latch_);
         Page *target = nullptr;
         if (!page_table_->Find(page_id, target)) {
             return false;
@@ -121,7 +121,7 @@ bool BufferPoolManager::UnpinPage(page_id_t page_id, bool is_dirty) {
  * NOTE: make sure page_id != INVALID_PAGE_ID
  */
 bool BufferPoolManager::FlushPage(page_id_t page_id) {
-        lock_guard<mutex> lck(latch_);
+        std::lock_guard<std::mutex> lck(latch_);
         Page *target = nullptr;
         if (!page_table_->Find(page_id, target)) //if page id is not in page table, return false
         {
@@ -146,7 +146,7 @@ bool BufferPoolManager::FlushPage(page_id_t page_id) {
  * the page is found within page table, but pin_count != 0, return false
  */
 bool BufferPoolManager::DeletePage(page_id_t page_id) {
-        lock_guard<mutex> lck(latch_);
+        std::lock_guard<std::mutex> lck(latch_);
         Page *target = nullptr;
         page_table_->Find(page_id, target);
         if (target != nullptr)
@@ -175,7 +175,7 @@ bool BufferPoolManager::DeletePage(page_id_t page_id) {
  * into page table. return nullptr if all the pages in pool are pinned
  */
 Page *BufferPoolManager::NewPage(page_id_t &page_id) {
-        lock_guard<mutex> lck(latch_);
+        std::lock_guard<std::mutex> lck(latch_);
         Page *target = nullptr; //get a free page from free list or lru_replacer
         target = GetVictimPage();
         if (target == nullptr) {return target; }//if no available page , then return nullptr
