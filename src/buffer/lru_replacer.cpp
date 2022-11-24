@@ -26,7 +26,7 @@ template <typename T> LRUReplacer<T>::~LRUReplacer() {
 template <typename T> void LRUReplacer<T>::Insert(const T &value) {
     //---------------------
 
-        std::lock_guard<mutex> lck(latch);
+        std::lock_guard<std::mutex> lck(latch);
 
         std::shared_ptr<Node> curPtr;//添加指针 指向value
         //页面在hash map中?
@@ -57,7 +57,7 @@ template <typename T> void LRUReplacer<T>::Insert(const T &value) {
  */
 template <typename T> bool LRUReplacer<T>::Victim(T &value) {
     //---------------------
-        std::lock_guard<mutex> lck (latch);
+        std::lock_guard<std::mutex> lck (latch);
         if (head->next == tail){
             return false;//empty
         }
@@ -76,7 +76,7 @@ template <typename T> bool LRUReplacer<T>::Victim(T &value) {
  */
 template <typename T> bool LRUReplacer<T>::Erase(const T &value) {
     //----------------------------
-        std::lock_guard<mutex> lck(latch);
+        std::lock_guard<std::mutex> lck(latch);
         if (hash_map.find(value) != hash_map.end()){
             std::shared_ptr<Node> cur = hash_map[value];
             cur->prev->next = cur->next;
@@ -90,7 +90,7 @@ template <typename T> bool LRUReplacer<T>::Erase(const T &value) {
 template <typename T> size_t LRUReplacer<T>::Size() {
     //------------------------
     size_t LRUReplacer<T>::Size() {
-        std::lock_guard<mutex> lck (latch);
+        std::lock_guard<std::mutex> lck (latch);
         return hash_map.size();
     }
     //------------------------
