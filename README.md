@@ -2,22 +2,15 @@ scu_database--The Database System course in SCU
 -------------------------------
 朱俊宏-2020141230141
 
-Homework 
+## Homework 
 ----------------------------------
 homework1：in branch homework1
 
-homework2：in branch project1
 
-homework3：
-
-homework4：
-
-Project 
+## Project 
 --------------------------------------
-Project 1：
+Project 1：in branch project1
 
-Project 2：
+Project 2：**in branch project2**
 
-Project 3:
 
-Project 4:
