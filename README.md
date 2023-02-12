@@ -6,17 +6,12 @@ Homework
 ----------------------------------
 homework1：in branch homework1
 
-homework2：in branch project1
-
-homework3：
-
-homework4：
 
 Project 
 --------------------------------------
-Project 1：
+Project 1：in branch project1
 
-Project 2：
+Project 2：in branch project2
 
 Project 3:
 
