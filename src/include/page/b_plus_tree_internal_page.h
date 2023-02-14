@@ -25,6 +25,9 @@ namespace scudb {
 #define B_PLUS_TREE_INTERNAL_PAGE_TYPE                                         \
   BPlusTreeInternalPage<KeyType, ValueType, KeyComparator>
 
+#define B_PLUS_TREE_INTERNAL_PAGE  \
+    BPlusTreeInternalPage <KeyType, page_id_t, KeyComparator>
+
 INDEX_TEMPLATE_ARGUMENTS
 class BPlusTreeInternalPage : public BPlusTreePage {
 public:
@@ -67,6 +70,6 @@ private:
                     BufferPoolManager *buffer_pool_manager);
   void CopyFirstFrom(const MappingType &pair, int parent_index,
                      BufferPoolManager *buffer_pool_manager);
-  MappingType array[0];
+  MappingType array[0]; //store keys and values
 };
 } // namespace scudb
