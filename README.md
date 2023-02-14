@@ -11,6 +11,6 @@ homework1：in branch homework1
 --------------------------------------
 Project 1：in branch project1
 
-Project 2：**in branch project2**
+Project 2：**in branch project2**https://github.com/iotHong/scu_database/tree/project2
 
 
