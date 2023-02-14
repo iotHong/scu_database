@@ -23,13 +23,6 @@
   test/index/b_plus_tree_delete_test.cpp  
   test/index/b_plus_tree_concurrent_test.cpp  
 ---
-### Build
-Using CLion to load Project2, then execute:
-```
-cd cmake-build-debug
-make
-```
----
 ### Test
 
 There are 3 test for this lab:
