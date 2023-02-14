@@ -32,28 +32,25 @@ make
 ---
 ### Test
 
-There are 2 test for this lab:
+There are 3 test for this lab:
 
 - b_plus_tree_test
 
 ```
-cd cmake-build-debug
+cd build
 make b_plus_tree_test
 ./test/b_plus_tree_test
 ```
-
 - b_plus_tree_print_test
-
 ```
-cd cmake-build-debug
 make b_plus_tree_print_test
 ./test/b_plus_tree_print_test
 ```
-
-* b_plus_tree_page_test
-* b_plus_tree_insert_test
-* b_plus_tree_delete_test
-* b_plus_tree_concurrent_test
+- b_plus_tree_concurrent_test
+```
+make b_plus_tree_concurrent_test  
+./test/b_plus_tree_concurrent_test  
+```
 ---
 ### Result
 
