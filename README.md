@@ -55,3 +55,7 @@ insert:
 
 delete:  
 ![delete](https://user-images.githubusercontent.com/86907571/218813697-0b1e55c1-a0ed-43a8-98c5-d7d45c805eba.png)  
+
+quit:  
+![quit](https://user-images.githubusercontent.com/86907571/218899601-ee8643a6-27da-42fc-9f2d-c56ee4fa9b98.png)
+ 
